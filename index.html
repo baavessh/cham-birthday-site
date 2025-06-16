@@ -1,443 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Happy Birthday Cham</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Quicksand&family=Great+Vibes&family=Sacramento&family=Dancing+Script&display=swap" rel="stylesheet">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Quicksand', sans-serif;
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-      background: #fff0f5;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Happy Birthday Cham</title>
+<style>
+  body {
+    margin: 0; padding: 0; font-family: 'Quicksand', sans-serif;
+    background: #fff0f5; color: #333;
+  }
+  header {
+    height: 100vh;
+    background: url('20240622_075359.jpg') no-repeat center / contain;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+    color: white; position: relative;
+  }
+  header::before {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(0,0,0,0.4); z-index: 0;
+  }
+  header h1 {
+    font-family: 'Great Vibes', cursive; font-size: 3.5em; margin: 0; z-index: 1;
+  }
+  header p {
+    z-index: 1; font-size: 1.2em; margin-top: 10px;
+  }
 
-    header {
-      position: relative;
-      height: 160vh;
-      background: url('20240622_075359.jpg') no-repeat center center;
-      background-size: contain;
-      background-repeat: no-repeat;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: white;
-    }
-    header::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.4);
-      z-index: 0;
-    }
+  .memory {
+    max-width: 700px; margin: 30px auto; padding: 40px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .memory.visible {
+    opacity: 1; transform: translateY(0);
+  }
+  .memory h2 {
+    color: #c71585;
+    font-family: 'Playfair Display', serif;
+    margin-top: 0;
+  }
 
-    header h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 3.5em;
-      z-index: 2;
-      animation: fadeIn 2s ease-in-out;
-    }
-    header p {
-      z-index: 2;
-      font-size: 1.2em;
-      margin-top: 10px;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+  .nav-buttons {
+    text-align: center; margin: 40px 0;
+  }
+  .nav-buttons button {
+    font-family: 'Sacramento', cursive;
+    font-size: 1.5rem;
+    background: #c71585;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    margin: 0 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(199,21,133,0.4);
+    transition: background 0.3s ease;
+  }
+  .nav-buttons button:hover {
+    background: #a30f67;
+  }
 
-    .section {
-      padding: 100px 20px;
-    }
+  /* Hide all pages except active */
+  .page {
+    display: none; max-width: 900px; margin: auto; padding: 20px;
+  }
+  .page.active {
+    display: block;
+  }
 
-    .section:first-of-type {
-      padding-top: 120px;
-    }
+  /* Popup */
+  #popup {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    justify-content: center; align-items: center; z-index: 9999; flex-direction: column;
+  }
+  #popup .popup-content {
+    background: #fff0f5; padding: 30px; border-radius: 15px;
+    font-family: 'Dancing Script', cursive; font-size: 3rem; color: #c71585;
+    animation: zoomIn 1s ease forwards;
+  }
+  #popup .popup-close {
+    position: absolute; top: 20px; right: 30px;
+    font-size: 2rem; color: white; cursor: pointer;
+    background: rgba(0,0,0,0.5);
+    border-radius: 50%; width: 40px; height: 40px;
+    display: flex; justify-content: center; align-items: center;
+  }
 
-    .section:nth-child(even) {
-      background: #ffe4e1;
-    }
+  @keyframes zoomIn {
+    from { transform: scale(0); opacity: 0;}
+    to { transform: scale(1); opacity: 1;}
+  }
 
-    .memory {
-      max-width: 700px;
-      margin: auto;
-      padding: 40px;
-      border-radius: 20px;
-      position: relative;
-      background: rgba(255,255,255,0.9);
-      background-size: cover;
-      background-position: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      opacity: 0;
-      transform: translateY(50px);
-      transition: 1s ease;
-    }
+  /* Memories fade in on scroll */
+  @media (max-width: 768px) {
+    header h1 { font-size: 2.5rem;}
+  }
 
-    .memory.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  /* Voice message */
+  #voice-message {
+    background: #ffe4e1;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 700px;
+    margin: 40px auto;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    color: #c71585;
+  }
+  #voice-message audio {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 15px;
+  }
 
-    .memory h2 {
-      color: #c71585;
-      font-family: 'Playfair Display', serif;
-    }
+  /* Slideshow */
+  #slideshow {
+    max-width: 700px;
+    margin: 50px auto;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    background: white;
+  }
+  #slideshow img {
+    width: 100%;
+    display: none;
+    border-radius: 20px;
+  }
+  #slideshow img.active {
+    display: block;
+  }
+  #slideshow-controls {
+    text-align: center;
+    margin-top: 15px;
+  }
+  #slideshow-controls button {
+    font-family: 'Sacramento', cursive;
+    font-size: 1.3rem;
+    background: #c71585;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    margin: 0 8px;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(199,21,133,0.4);
+    transition: background 0.3s ease;
+  }
+  #slideshow-controls button:hover {
+    background: #a30f67;
+  }
 
-    /* New Sections Styling */
+  /* Letter */
+  #letter {
+    background: #ffe4e1;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 700px;
+    margin: 60px auto 100px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    line-height: 1.6;
+    color: #c71585;
+    white-space: pre-wrap;
+    text-align: center;
+  }
 
-    .voice-message, .image-gallery, .letter {
-      max-width: 700px;
-      margin: 50px auto;
-      padding: 40px;
-      background: rgba(255,255,255,0.9);
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      font-family: 'Playfair Display', serif;
-      color: #c71585;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: 1s ease;
-    }
-    .voice-message.visible,
-    .image-gallery.visible,
-    .letter.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .voice-message h2,
-    .image-gallery h2,
-    .letter h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-family: 'Great Vibes', cursive;
-      font-size: 2.8rem;
-    }
-
-    /* Audio Player Styling */
-    .voice-message audio {
-      width: 100%;
-      outline: none;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(199,21,133,0.4);
-      cursor: pointer;
-    }
-
-    /* Image Gallery */
-    .gallery-container {
-      position: relative;
-      max-width: 100%;
-      overflow: hidden;
-      border-radius: 20px;
-    }
-
-    .gallery-slide {
-      display: none;
-      width: 100%;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    }
-
-    .gallery-slide.active {
-      display: block;
-      animation: fadeIn 1s ease forwards;
-    }
-
-    .gallery-controls {
-      text-align: center;
-      margin-top: 15px;
-    }
-
-    .gallery-button {
-      background: #c71585;
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      margin: 0 10px;
-      border-radius: 30px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(199,21,133,0.5);
-      transition: background 0.3s ease;
-    }
-
-    .gallery-button:hover {
-      background: #e754ab;
-    }
-
-    /* Letter Styling */
-    .letter p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      white-space: pre-line;
-      font-family: 'Dancing Script', cursive;
-      color: #a30f65;
-      padding: 0 10px;
-      text-align: center;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 50px 20px;
-      background: #ffe4e1;
-      font-size: 1.2rem;
-      position: relative;
-    }
-
-    .emoji-line {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-      text-align: center;
-    }
-
-    #popup {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      flex-direction: column;
-    }
-
-    .popup-content {
-      background: #fff0f5;
-      padding: 30px;
-      border-radius: 15px;
-      text-align: center;
-      font-size: 3rem;
-      font-family: 'Dancing Script', cursive;
-      animation: zoomIn 1s ease forwards;
-      color: #c71585;
-    }
-
-    .popup-close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 2rem;
-      color: white;
-      z-index: 10000;
-      cursor: pointer;
-      background: rgba(0,0,0,0.5);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .confetti {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background-color: #f06292;
-      animation: fall 3s linear infinite;
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(-100px) rotate(0); opacity: 1; }
-      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-    }
-
-    @keyframes zoomIn {
-      0% { transform: scale(0); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    .heart {
-      position: fixed;
-      bottom: -20px;
-      width: 20px;
-      height: 20px;
-      background: url('https://emojicdn.elk.sh/💖') no-repeat center/contain;
-      animation: floatHeart 6s linear infinite;
-      opacity: 0.8;
-    }
-
-    @keyframes floatHeart {
-      0% { transform: translateY(0) scale(1); }
-      100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
-    }
-
-    @media (max-width: 768px) {
-      header h1 { font-size: 2.5rem; }
-      .voice-message h2,
-      .image-gallery h2,
-      .letter h2 {
-        font-size: 2rem;
-      }
-    }
-  </style>
+</style>
 </head>
 <body>
-  <header id="header">
+
+<!-- Page 1 -->
+<div id="page1" class="page active">
+  <header>
     <h1>Happy Birthday Cham 💖</h1>
     <p>You're the most beautiful gift in my life</p>
   </header>
 
   <div id="memories-container"></div>
 
-  <!-- New Sections Start -->
+  <div class="nav-buttons">
+    <button id="toPage2">Go to Surprise</button>
+  </div>
+</div>
 
-  <!-- Secret Voice Message -->
-  <section class="voice-message section">
-    <h2>🔊 Secret Voice Message</h2>
+<!-- Page 2 -->
+<div id="page2" class="page">
+  <div class="nav-buttons">
+    <button id="toPage1">Back to Memories</button>
+  </div>
+
+  <section id="voice-message" aria-label="Secret Voice Message">
+    <h2>Secret Voice Message</h2>
+    <p>Close your eyes and listen... I have something special just for you.</p>
     <audio controls>
-      <source src="your-voice-message.mp3" type="audio/mp3" />
+      <source src="https://cdn.pixabay.com/download/audio/2023/03/13/audio_f700cb89a7.mp3?filename=romantic-love-14495.mp3" type="audio/mp3" />
       Your browser does not support the audio element.
     </audio>
   </section>
 
-  <!-- Romantic Slideshow -->
-  <section class="image-gallery section">
-    <h2>📸 Romantic Slideshow</h2>
-    <div class="gallery-container">
-      <img src="https://source.unsplash.com/700x400/?romantic,couple" alt="Romantic Image 1" class="gallery-slide active" />
-      <img src="https://source.unsplash.com/700x400/?love,couple" alt="Romantic Image 2" class="gallery-slide" />
-      <img src="https://source.unsplash.com/700x400/?heart,romance" alt="Romantic Image 3" class="gallery-slide" />
-      <img src="https://source.unsplash.com/700x400/?flowers,romantic" alt="Romantic Image 4" class="gallery-slide" />
-    </div>
-    <div class="gallery-controls">
-      <button class="gallery-button" id="prevBtn">← Prev</button>
-      <button class="gallery-button" id="nextBtn">Next →</button>
+  <section id="slideshow" aria-label="Romantic Slideshow">
+    <h2 style="text-align:center; font-family: 'Playfair Display', serif; color:#c71585; padding: 20px 0; margin:0;">
+      Romantic Slideshow
+    </h2>
+    <img src="https://source.unsplash.com/700x400/?couple,romantic,flowers" alt="Romantic couple" class="active" />
+    <img src="https://source.unsplash.com/700x400/?love,hearts" alt="Hearts in love" />
+    <img src="https://source.unsplash.com/700x400/?romantic,sunset" alt="Romantic sunset" />
+    <img src="https://source.unsplash.com/700x400/?roses" alt="Roses" />
+
+    <div id="slideshow-controls">
+      <button id="prevSlide">Prev</button>
+      <button id="nextSlide">Next</button>
     </div>
   </section>
 
-  <!-- Heartfelt Letter -->
-  <section class="letter section">
-    <h2>💌 Letter to You, My Heart</h2>
+  <section id="letter" aria-label="Heartfelt Letter">
+    <h2>Letter to You, My Heart</h2>
     <p>
-      Dear Cham,<br><br>
-      You are the melody that brightens my darkest days, the smile that warms my heart, and the light guiding me through every moment.<br><br>
-      Every memory we've shared is a precious treasure I hold close. No matter what the future holds, my love for you is endless and true.<br><br>
-      Happy Birthday, my love. Here's to many more beautiful moments together.<br><br>
-      With all my heart,<br>
+      Dear Cham,<br /><br />
+      You are the melody in my silence, the light in my darkest days.<br />
+      Every moment with you feels like a beautiful dream I never want to wake up from.<br /><br />
+      Though life has its ups and downs, my heart remains true to you — always.<br />
+      I hope this day brings you as much happiness as you have given me.<br /><br />
+      With all my love,<br />
       Baav
     </p>
   </section>
+</div>
 
-  <!-- New Sections End -->
+<!-- Popup confetti -->
+<div id="popup">
+  <div class="popup-close" onclick="closePopup()">×</div>
+  <div class="popup-content">HAPPY BIRTHDAY CHAM 💖</div>
+</div>
 
-  <footer>
-    <div class="emoji-line">💖💗💓💕💞💘💝❣️💟</div>
-    Wherever you are — even if you're not with me — I hope you're smiling and living the happiest life. ❤️<br>
-    With all my love,<br>Baav
-  </footer>
+<script>
+  // Navigation between pages
+  const page1 = document.getElementById('page1');
+  const page2 = document.getElementById('page2');
+  document.getElementById('toPage2').addEventListener('click', () => {
+    page1.classList.remove('active');
+    page2.classList.add('active');
+    window.scrollTo(0, 0);
+  });
+  document.getElementById('toPage1').addEventListener('click', () => {
+    page2.classList.remove('active');
+    page1.classList.add('active');
+    window.scrollTo(0, 0);
+  });
 
-  <div id="popup">
-    <div class="popup-close" onclick="closePopup()">×</div>
-    <div class="popup-content">HAPPY BIRTHDAY CHAM 💖</div>
-  </div>
+  // Memories data
+  const memories = [
+    {title:"First Sight ✨", text:"I saw your name on Cliq in Sep 2022 — it was unique.", bg:"https://source.unsplash.com/featured/?love"},
+    {title:"First Talk 🍽️", text:"We spoke first in the dining hall — Oct 2022.", bg:"https://source.unsplash.com/featured/?dining"},
+    {title:"Tenkasi Trip 🚌", text:"We got closer during our trip in mid-Oct 2022.", bg:"https://source.unsplash.com/featured/?travel"},
+    {title:"Best Moments 💞", text:"Nov–Dec 2022: sharing every day with you meant everything.", bg:"https://source.unsplash.com/featured/?memories"},
+    {title:"Birthday Bond 🎂", text:"I wanted to confess on Feb 3, 2023 — my birthday.", bg:"https://source.unsplash.com/featured/?birthday"},
+    {title:"I Said It 🌌", text:'June 12, 2023: I said "I love you", finally.', bg:"https://source.unsplash.com/featured/?stars"},
+    {title:"Painful Silence 💔", text:"From Aug to Dec 2024, you stayed distant to protect me — or maybe yourself.", bg:"https://source.unsplash.com/featured/?heartbreak"},
+    {title:"Still Hoping 🌹", text:"Even now, your smile gives me hope — always.", bg:"https://source.unsplash.com/featured/?hope"}
+  ];
 
-  <audio autoplay loop hidden>
-    <source src="https://cdn.pixabay.com/download/audio/2023/03/13/audio_f700cb89a7.mp3?filename=romantic-love-14495.mp3" type="audio/mp3" />
-  </audio>
+  const container = document.getElementById('memories-container');
+  memories.forEach(mem => {
+    const section = document.createElement('section');
+    section.className = 'memory';
+    section.style.backgroundImage = `url('${mem.bg}')`;
+    section.innerHTML = `<h2>${mem.title}</h2><p>${mem.text}</p>`;
+    container.appendChild(section);
+  });
 
-  <script>
-    function closePopup() {
-      const popup = document.getElementById('popup');
-      popup.style.display = 'none';
-    }
-
-    const memories = [
-      { title: 'First Sight ✨', text: 'I saw your name on Cliq in Sep 2022 — it was unique.', bg: 'https://source.unsplash.com/featured/?love' },
-      { title: 'First Talk 🍽️', text: 'We spoke first in the dining hall — Oct 2022.', bg: 'https://source.unsplash.com/featured/?dining' },
-      { title: 'Tenkasi Trip 🚌', text: 'We got closer during our trip in mid-Oct 2022.', bg: 'https://source.unsplash.com/featured/?travel' },
-      { title: 'Best Moments 💞', text: 'Nov–Dec 2022: sharing every day with you meant everything.', bg: 'https://source.unsplash.com/featured/?memories' },
-      { title: 'Birthday Bond 🎂', text: 'I wanted to confess on Feb 3, 2023 — my birthday.', bg: 'https://source.unsplash.com/featured/?birthday' },
-      { title: 'I Said It 🌌', text: 'June 12, 2023: I said "I love you", finally.', bg: 'https://source.unsplash.com/featured/?stars' },
-      { title: 'Painful Silence 💔', text: 'From Aug to Dec 2024, you stayed distant to protect me — or maybe yourself.', bg: 'https://source.unsplash.com/featured/?heartbreak' },
-      { title: 'Still Hoping 🌹', text: 'Even now, your smile gives me hope — always.', bg: 'https://source.unsplash.com/featured/?hope' }
-    ];
-
-    const container = document.getElementById('memories-container');
-    memories.forEach(mem => {
-      const section = document.createElement('section');
-      section.className = 'section';
-      const div = document.createElement('div');
-      div.className = 'memory';
-      div.innerHTML = `<h2>${mem.title}</h2><p>${mem.text}</p>`;
-      div.style.backgroundImage = `url('${mem.bg}')`;
-      section.appendChild(div);
-      container.appendChild(section);
-    });
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.memory').forEach(mem => observer.observe(mem));
-
-    // Observe new sections for fade in effect
-    ['.voice-message', '.image-gallery', '.letter'].forEach(selector => {
-      const el = document.querySelector(selector);
-      if(el) observer.observe(el);
-    });
-
-    const popup = document.getElementById('popup');
-    window.addEventListener('scroll', () => {
-      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
-        if(popup.style.display !== 'flex'){
-          popup.style.display = 'flex';
-          for (let i = 0; i < 100; i++) {
-            const confetti = document.createElement('div');
-            confetti.className = 'confetti';
-            confetti.style.left = Math.random() * 100 + 'vw';
-            confetti.style.top = Math.random() * -20 + 'px';
-            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
-            confetti.style.animationDuration = `${Math.random() * 2 + 2}s`;
-            popup.appendChild(confetti);
-          }
-        }
+  // Intersection Observer for fade-in
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
       }
     });
+  }, {threshold: 0.1});
+  document.querySelectorAll('.memory').forEach(mem => observer.observe(mem));
 
-    for (let i = 0; i < 30; i++) {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDelay = `${Math.random() * 6}s`;
-      document.body.appendChild(heart);
+  // Popup confetti when scrolled to bottom on page1
+  const popup = document.getElementById('popup');
+  let confettiShown = false;
+  window.addEventListener('scroll', () => {
+    if(!confettiShown && page1.classList.contains('active') &&
+       (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
+      popup.style.display = 'flex';
+      confettiShown = true;
     }
+  });
+  function closePopup() {
+    popup.style.display = 'none';
+  }
 
-    // Gallery controls
-    const slides = document.querySelectorAll('.gallery-slide');
-    let currentSlide = 0;
-    const totalSlides = slides.length;
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
+  // Slideshow controls
+  const slides = document.querySelectorAll('#slideshow img');
+  let currentSlide = 0;
+  function showSlide(idx){
+    slides.forEach((s,i) => s.classList.toggle('active', i === idx));
+  }
+  document.getElementById('prevSlide').onclick = () => {
+    currentSlide = (currentSlide -1 + slides.length) % slides.length;
+    showSlide(currentSlide);
+  };
+  document.getElementById('nextSlide').onclick = () => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  };
+</script>
 
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle('active', i === index);
-      });
-    }
-
-    prevBtn.addEventListener('click', () => {
-      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-      showSlide(currentSlide);
-    });
-
-    nextBtn.addEventListener('click', () => {
-      currentSlide = (currentSlide + 1) % totalSlides;
-      showSlide(currentSlide);
-    });
-
-  </script>
 </body>
 </html>
