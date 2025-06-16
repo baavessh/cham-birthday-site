@@ -89,6 +89,100 @@
       font-family: 'Playfair Display', serif;
     }
 
+    /* New Sections Styling */
+
+    .voice-message, .image-gallery, .letter {
+      max-width: 700px;
+      margin: 50px auto;
+      padding: 40px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      font-family: 'Playfair Display', serif;
+      color: #c71585;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: 1s ease;
+    }
+    .voice-message.visible,
+    .image-gallery.visible,
+    .letter.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .voice-message h2,
+    .image-gallery h2,
+    .letter h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.8rem;
+    }
+
+    /* Audio Player Styling */
+    .voice-message audio {
+      width: 100%;
+      outline: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(199,21,133,0.4);
+      cursor: pointer;
+    }
+
+    /* Image Gallery */
+    .gallery-container {
+      position: relative;
+      max-width: 100%;
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    .gallery-slide {
+      display: none;
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .gallery-slide.active {
+      display: block;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .gallery-controls {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .gallery-button {
+      background: #c71585;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      margin: 0 10px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(199,21,133,0.5);
+      transition: background 0.3s ease;
+    }
+
+    .gallery-button:hover {
+      background: #e754ab;
+    }
+
+    /* Letter Styling */
+    .letter p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      white-space: pre-line;
+      font-family: 'Dancing Script', cursive;
+      color: #a30f65;
+      padding: 0 10px;
+      text-align: center;
+    }
+
+    /* Footer */
     footer {
       text-align: center;
       padding: 50px 20px;
@@ -181,6 +275,11 @@
 
     @media (max-width: 768px) {
       header h1 { font-size: 2.5rem; }
+      .voice-message h2,
+      .image-gallery h2,
+      .letter h2 {
+        font-size: 2rem;
+      }
     }
   </style>
 </head>
@@ -191,6 +290,47 @@
   </header>
 
   <div id="memories-container"></div>
+
+  <!-- New Sections Start -->
+
+  <!-- Secret Voice Message -->
+  <section class="voice-message section">
+    <h2>🔊 Secret Voice Message</h2>
+    <audio controls>
+      <source src="your-voice-message.mp3" type="audio/mp3" />
+      Your browser does not support the audio element.
+    </audio>
+  </section>
+
+  <!-- Romantic Slideshow -->
+  <section class="image-gallery section">
+    <h2>📸 Romantic Slideshow</h2>
+    <div class="gallery-container">
+      <img src="https://source.unsplash.com/700x400/?romantic,couple" alt="Romantic Image 1" class="gallery-slide active" />
+      <img src="https://source.unsplash.com/700x400/?love,couple" alt="Romantic Image 2" class="gallery-slide" />
+      <img src="https://source.unsplash.com/700x400/?heart,romance" alt="Romantic Image 3" class="gallery-slide" />
+      <img src="https://source.unsplash.com/700x400/?flowers,romantic" alt="Romantic Image 4" class="gallery-slide" />
+    </div>
+    <div class="gallery-controls">
+      <button class="gallery-button" id="prevBtn">← Prev</button>
+      <button class="gallery-button" id="nextBtn">Next →</button>
+    </div>
+  </section>
+
+  <!-- Heartfelt Letter -->
+  <section class="letter section">
+    <h2>💌 Letter to You, My Heart</h2>
+    <p>
+      Dear Cham,<br><br>
+      You are the melody that brightens my darkest days, the smile that warms my heart, and the light guiding me through every moment.<br><br>
+      Every memory we've shared is a precious treasure I hold close. No matter what the future holds, my love for you is endless and true.<br><br>
+      Happy Birthday, my love. Here's to many more beautiful moments together.<br><br>
+      With all my heart,<br>
+      Baav
+    </p>
+  </section>
+
+  <!-- New Sections End -->
 
   <footer>
     <div class="emoji-line">💖💗💓💕💞💘💝❣️💟</div>
@@ -243,18 +383,26 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.memory').forEach(mem => observer.observe(mem));
 
+    // Observe new sections for fade in effect
+    ['.voice-message', '.image-gallery', '.letter'].forEach(selector => {
+      const el = document.querySelector(selector);
+      if(el) observer.observe(el);
+    });
+
     const popup = document.getElementById('popup');
     window.addEventListener('scroll', () => {
       if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
-        popup.style.display = 'flex';
-        for (let i = 0; i < 100; i++) {
-          const confetti = document.createElement('div');
-          confetti.className = 'confetti';
-          confetti.style.left = Math.random() * 100 + 'vw';
-          confetti.style.top = Math.random() * -20 + 'px';
-          confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
-          confetti.style.animationDuration = `${Math.random() * 2 + 2}s`;
-          popup.appendChild(confetti);
+        if(popup.style.display !== 'flex'){
+          popup.style.display = 'flex';
+          for (let i = 0; i < 100; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = Math.random() * -20 + 'px';
+            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+            confetti.style.animationDuration = `${Math.random() * 2 + 2}s`;
+            popup.appendChild(confetti);
+          }
         }
       }
     });
@@ -266,6 +414,30 @@
       heart.style.animationDelay = `${Math.random() * 6}s`;
       document.body.appendChild(heart);
     }
+
+    // Gallery controls
+    const slides = document.querySelectorAll('.gallery-slide');
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    prevBtn.addEventListener('click', () => {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      showSlide(currentSlide);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      showSlide(currentSlide);
+    });
+
   </script>
 </body>
 </html>
