@@ -17,7 +17,7 @@
 
     header {
       position: relative;
-      height: 100vh;
+      height: 90vh;
       background: url('20240622_075359.jpg') no-repeat top center;
       background-size: cover;
       display: flex;
@@ -35,7 +35,7 @@
       z-index: 0;
     }
 
-     header h1 {
+    header h1 {
       font-family: 'Great Vibes', cursive;
       font-size: 3.5em;
       z-index: 2;
@@ -53,6 +53,10 @@
 
     .section {
       padding: 100px 20px;
+    }
+
+    .section:first-of-type {
+      padding-top: 120px;
     }
 
     .section:nth-child(even) {
@@ -84,52 +88,6 @@
       font-family: 'Playfair Display', serif;
     }
 
-    .quiz {
-      padding: 40px;
-      background: rgba(255,255,255,0.95);
-      border-radius: 15px;
-      border: 2px dashed #c71585;
-      max-width: 700px;
-      margin: auto;
-      animation: fadeIn 2s ease-in-out;
-    }
-
-    .quiz h3 { color: #c71585; }
-
-    .quiz li {
-      list-style: none;
-      margin: 10px 0;
-      padding: 10px;
-      background: #fff0f5;
-      border: 1px solid #c71585;
-      border-radius: 10px;
-      cursor: move;
-    }
-
-    .dropzone {
-      background: #fce4ec;
-      border: 2px dashed #c71585;
-      padding: 15px;
-      min-height: 50px;
-      margin-bottom: 10px;
-      border-radius: 10px;
-    }
-
-    .reveal-password, .surprise {
-      display: none;
-      text-align: center;
-      font-size: 1.5rem;
-      margin-top: 30px;
-      animation: popUp 1s ease-in-out;
-    }
-
-    .surprise {
-      background: #f8bbd0;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-
     footer {
       text-align: center;
       padding: 50px 20px;
@@ -140,11 +98,6 @@
     @keyframes fadeIn {
       0% {opacity: 0; transform: translateY(50px);}
       100% {opacity: 1; transform: translateY(0);}
-    }
-
-    @keyframes popUp {
-      0% {transform: scale(0.5); opacity: 0;}
-      100% {transform: scale(1); opacity: 1;}
     }
 
     @media (max-width: 768px) {
@@ -160,23 +113,6 @@
 
   <div id="memories-container"></div>
 
-  <section class="section">
-    <div class="quiz">
-      <h3>💌 Unlock the Final Surprise by Answering:</h3>
-      <p>Drag the correct answers to the questions</p>
-      <ul id="questions">
-        <li id="q1" draggable="true">Why did Cham say she was distant between Aug–Dec 2024?</li>
-        <li id="q2" draggable="true">When did Baav first see Cham's name?</li>
-        <li id="q3" draggable="true">Where did they first talk?</li>
-      </ul>
-      <div class="dropzone" data-question="q1">To make Baav stay away from her for marriage</div>
-      <div class="dropzone" data-question="q2">September 2022</div>
-      <div class="dropzone" data-question="q3">First floor dining hall</div>
-      <div class="reveal-password" id="password">🎁 Password: <strong>Cham2203Baav</strong></div>
-      <div class="surprise" id="surprise-msg">🎉 Check your email, Cham! A special gift is waiting just for you 💌</div>
-    </div>
-  </section>
-
   <footer>
     Wherever you are — even if you're not with me — I hope you're smiling and living the happiest life. ❤️<br>
     With all my love,<br>Baav
@@ -187,34 +123,6 @@
   </audio>
 
   <script>
-    const draggables = document.querySelectorAll('#questions li');
-    const dropzones = document.querySelectorAll('.dropzone');
-    const passwordReveal = document.getElementById('password');
-    const surpriseMsg = document.getElementById('surprise-msg');
-
-    draggables.forEach(item => {
-      item.addEventListener('dragstart', e => {
-        e.dataTransfer.setData('text/plain', item.id);
-      });
-    });
-
-    dropzones.forEach(zone => {
-      zone.addEventListener('dragover', e => e.preventDefault());
-      zone.addEventListener('drop', e => {
-        e.preventDefault();
-        const draggedId = e.dataTransfer.getData('text/plain');
-        const draggedEl = document.getElementById(draggedId);
-        zone.innerHTML = draggedEl.innerHTML;
-        zone.dataset.filled = draggedId;
-
-        if ([...dropzones].every(z => z.dataset.filled === z.dataset.question)) {
-          passwordReveal.style.display = 'block';
-          surpriseMsg.style.display = 'block';
-          showConfetti();
-        }
-      });
-    });
-
     const memories = [
       { title: 'First Sight ✨', text: 'I saw your name on Cliq in Sep 2022 — it was unique.', bg: 'https://source.unsplash.com/featured/?love' },
       { title: 'First Talk 🍽️', text: 'We spoke first in the dining hall — Oct 2022.', bg: 'https://source.unsplash.com/featured/?dining' },
@@ -244,52 +152,6 @@
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.memory').forEach(mem => observer.observe(mem));
-
-    function showConfetti() {
-      const canvas = document.createElement('canvas');
-      document.body.appendChild(canvas);
-      const ctx = canvas.getContext('2d');
-      canvas.style.position = 'fixed';
-      canvas.style.top = 0;
-      canvas.style.left = 0;
-      canvas.style.width = '100vw';
-      canvas.style.height = '100vh';
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      const confetti = [];
-      for (let i = 0; i < 150; i++) {
-        confetti.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          r: Math.random() * 6 + 4,
-          d: Math.random() * 20 + 10,
-          color: `hsl(${Math.random() * 360}, 100%, 70%)`,
-          tilt: Math.random() * 10 - 5,
-        });
-      }
-
-      function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        confetti.forEach(c => {
-          ctx.beginPath();
-          ctx.fillStyle = c.color;
-          ctx.ellipse(c.x, c.y, c.r, c.r / 2, c.tilt, 0, Math.PI * 2);
-          ctx.fill();
-        });
-        update();
-        requestAnimationFrame(draw);
-      }
-
-      function update() {
-        confetti.forEach(c => {
-          c.y += Math.sin(c.d / 10);
-          c.x += Math.sin(c.d / 15);
-        });
-      }
-
-      draw();
-    }
   </script>
 </body>
 </html>
