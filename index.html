@@ -281,6 +281,33 @@
         font-size: 2rem;
       }
     }
+    .final-banner {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(45deg, #ffe4e1, #fff0f5);
+  padding: 30px 20px;
+  text-align: center;
+  font-family: 'Dancing Script', cursive;
+  color: #c71585;
+  font-size: 1.8rem;
+  z-index: 99999;
+  animation: slideUp 1s ease-in-out forwards;
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+  border-top: 5px solid #ff69b4;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
   </style>
 </head>
 <body>
@@ -351,6 +378,14 @@
     <div class="popup-close" onclick="closePopup()">×</div>
     <div class="popup-content">HAPPY BIRTHDAY CHAM 💖</div>
   </div>
+  <div id="finalBanner" class="final-banner">
+  <div class="banner-content">
+    <h2>🎉 Surprises Never End! 🎂🎁</h2>
+    <p>For the sweetest girl with the sweetest soul...</p>
+    <div class="emoji-line">🎂🎁🎉💐🍰🎀🎈🎊</div>
+    <p>Happy Birthday Cham, forever my sunshine. 💖</p>
+  </div>
+</div>
 
   <audio autoplay loop hidden>
     <source src="Final audio.m4" type="audio/mp4" />
@@ -415,6 +450,23 @@
         }
       }
     });
+    // Show final banner 4 seconds after popup
+window.addEventListener('scroll', () => {
+  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
+    setTimeout(() => {
+      document.getElementById('finalBanner').style.display = 'block';
+    }, 4000);
+  }
+});
+for (let i = 0; i < 20; i++) {
+  const gift = document.createElement('div');
+  gift.className = 'heart'; // reuse existing heart class
+  gift.style.backgroundImage = `url('https://emojicdn.elk.sh/${Math.random() > 0.5 ? '🎁' : '🎂'}')`;
+  gift.style.left = Math.random() * 100 + 'vw';
+  gift.style.animationDelay = `${Math.random() * 6}s`;
+  document.body.appendChild(gift);
+}
+
 
     for (let i = 0; i < 30; i++) {
       const heart = document.createElement('div');
