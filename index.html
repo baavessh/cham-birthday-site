@@ -17,7 +17,7 @@
 
     header {
       position: relative;
-      height: 100vh;
+      height: 110vh;
       background: url('20240622_075359.jpg') no-repeat center center;
       background-size: contain;
       background-repeat: no-repeat;
@@ -36,29 +36,11 @@
       z-index: 0;
     }
 
-    #close-btn {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 2rem;
-      color: white;
-      z-index: 10;
-      cursor: pointer;
-      background: rgba(0,0,0,0.6);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
     header h1 {
-      font-family: 'Sacramento', cursive;
-      font-size: 4em;
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.5em;
       z-index: 2;
       animation: fadeIn 2s ease-in-out;
-      text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
     }
     header p {
       z-index: 2;
@@ -126,6 +108,7 @@
       justify-content: center;
       align-items: center;
       overflow: hidden;
+      flex-direction: column;
     }
 
     .popup-content {
@@ -133,11 +116,27 @@
       padding: 30px;
       border-radius: 15px;
       text-align: center;
-      font-size: 2.5rem;
+      font-size: 3rem;
       font-family: 'Sacramento', cursive;
       animation: zoomIn 1s ease forwards;
       color: #c71585;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      color: white;
+      z-index: 10000;
+      cursor: pointer;
+      background: rgba(0,0,0,0.5);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .confetti {
@@ -159,13 +158,12 @@
     }
 
     @media (max-width: 768px) {
-      header h1 { font-size: 2.8rem; }
+      header h1 { font-size: 2.5rem; }
     }
   </style>
 </head>
 <body>
   <header id="header">
-    <div id="close-btn" onclick="closeHeader()">×</div>
     <h1>Happy Birthday Cham 💖</h1>
     <p>You're the most beautiful gift in my life</p>
   </header>
@@ -178,6 +176,7 @@
   </footer>
 
   <div id="popup">
+    <div class="popup-close" onclick="closePopup()">×</div>
     <div class="popup-content">HAPPY BIRTHDAY CHAM 💖</div>
   </div>
 
@@ -186,8 +185,9 @@
   </audio>
 
   <script>
-    function closeHeader() {
-      document.getElementById('header').style.display = 'none';
+    function closePopup() {
+      const popup = document.getElementById('popup');
+      popup.style.display = 'none';
     }
 
     const memories = [
