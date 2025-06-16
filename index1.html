@@ -17,7 +17,7 @@
 
     header {
       position: relative;
-      height: 220vh;
+      height: 160vh;
       background: url('20240622_075359.jpg') no-repeat center center;
       background-size: contain;
       background-repeat: no-repeat;
@@ -37,14 +37,14 @@
     }
 
     header h1 {
-      font-family: 'Dancing Script', cursive;
-      font-size: 3.8em;
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.5em;
       z-index: 2;
       animation: fadeIn 2s ease-in-out;
     }
     header p {
       z-index: 2;
-      font-size: 1.3em;
+      font-size: 1.2em;
       margin-top: 10px;
     }
     @keyframes fadeIn {
@@ -54,99 +54,143 @@
 
     .section {
       padding: 100px 20px;
+    }
+
+    .section:first-of-type {
+      padding-top: 120px;
+    }
+
+    .section:nth-child(even) {
+      background: #ffe4e1;
+    }
+
+    .memory {
+      max-width: 700px;
+      margin: auto;
+      padding: 40px;
+      border-radius: 20px;
+      position: relative;
+      background: rgba(255,255,255,0.9);
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateY(50px);
+      transition: 1s ease;
+    }
+
+    .memory.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .memory h2 {
+      color: #c71585;
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* New Sections Styling */
+
+    .voice-message, .image-gallery, .letter {
+      max-width: 700px;
+      margin: 50px auto;
+      padding: 40px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      font-family: 'Playfair Display', serif;
+      color: #c71585;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: 1s ease;
+    }
+    .voice-message.visible,
+    .image-gallery.visible,
+    .letter.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .voice-message h2,
+    .image-gallery h2,
+    .letter h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.8rem;
+    }
+
+    /* Audio Player Styling */
+    .voice-message audio {
+      width: 100%;
+      outline: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(199,21,133,0.4);
+      cursor: pointer;
+    }
+
+    /* Image Gallery */
+    .gallery-container {
+      position: relative;
+      max-width: 100%;
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    .gallery-slide {
+      display: none;
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .gallery-slide.active {
+      display: block;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .gallery-controls {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .gallery-button {
+      background: #c71585;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      margin: 0 10px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(199,21,133,0.5);
+      transition: background 0.3s ease;
+    }
+
+    .gallery-button:hover {
+      background: #e754ab;
+    }
+
+    /* Letter Styling */
+    .letter p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      white-space: pre-line;
+      font-family: 'Dancing Script', cursive;
+      color: #a30f65;
+      padding: 0 10px;
       text-align: center;
     }
 
-    .section-title {
-      font-family: 'Dancing Script', cursive;
-      font-size: 2.5rem;
-      color: #c71585;
-      margin-bottom: 30px;
-    }
-
-    .fade-left {
-      animation: fadeLeft 1.5s ease forwards;
-    }
-    @keyframes fadeLeft {
-      from { opacity: 0; transform: translateX(-50px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    .zoom-in {
-      animation: zoomIn 1.5s ease forwards;
-    }
-
-    @keyframes zoomIn {
-      0% { transform: scale(0); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    .memory-cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      padding: 40px 20px;
-      position: relative;
-      z-index: 1;
-    }
-    .memory-card {
-      background: #fff;
-      width: 300px;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-      animation: floatIn 1.5s ease forwards;
-    }
-    .memory-card:hover {
-      transform: translateY(-5px);
-    }
-    .memory-card h3 {
-      font-family: 'Dancing Script', cursive;
-      font-size: 1.5rem;
-      color: #c71585;
-    }
-    .memory-card p {
-      font-size: 1rem;
-      color: #333;
-      margin-top: 10px;
-    }
-    @keyframes floatIn {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .hearts {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    .heart {
-      width: 20px;
-      height: 20px;
-      position: absolute;
-      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
-      background-size: contain;
-      animation: floatHeart 10s linear infinite;
-    }
-    @keyframes floatHeart {
-      from { transform: translateY(100vh); opacity: 1; }
-      to { transform: translateY(-100vh); opacity: 0; }
-    }
-
+    /* Footer */
     footer {
       text-align: center;
-      padding: 50px 20px 80px;
+      padding: 50px 20px;
       background: #ffe4e1;
       font-size: 1.2rem;
       position: relative;
     }
+
     .emoji-line {
       font-size: 1.5rem;
       margin-bottom: 10px;
@@ -167,18 +211,20 @@
       overflow: hidden;
       flex-direction: column;
     }
+
     .popup-content {
       background: #fff0f5;
       padding: 30px;
       border-radius: 15px;
       text-align: center;
       font-size: 3rem;
-      font-family: 'Great Vibes', cursive;
+      font-family: 'Dancing Script', cursive;
       animation: zoomIn 1s ease forwards;
       color: #c71585;
     }
-    #close-btn {
-      position: fixed;
+
+    .popup-close {
+      position: absolute;
       top: 20px;
       right: 30px;
       font-size: 2rem;
@@ -192,67 +238,99 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      transition: background 0.3s;
-    }
-    #close-btn:hover {
-      background: rgba(0,0,0,0.8);
     }
 
-    .typewriter {
-      display: inline-block;
-      overflow: hidden;
-      white-space: nowrap;
-      border-right: 2px solid #c71585;
-      animation: typing 5s steps(60) 1, blink 1s step-end infinite;
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #f06292;
+      animation: fall 3s linear infinite;
     }
 
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
+    @keyframes fall {
+      0% { transform: translateY(-100px) rotate(0); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
-    @keyframes blink {
-      50% { border-color: transparent; }
+
+    @keyframes zoomIn {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      width: 20px;
+      height: 20px;
+      background: url('https://emojicdn.elk.sh/💖') no-repeat center/contain;
+      animation: floatHeart 6s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes floatHeart {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.5rem; }
+      .voice-message h2,
+      .image-gallery h2,
+      .letter h2 {
+        font-size: 2rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="hearts"></div>
-
-  <header>
+  <header id="header">
     <h1>Happy Birthday Cham 💖</h1>
     <p>You're the most beautiful gift in my life</p>
   </header>
 
-  <section class="section fade-left">
-    <h2 class="section-title">🔊 Secret Voice Message</h2>
+  <div id="memories-container"></div>
+
+  <!-- New Sections Start -->
+
+  <!-- Secret Voice Message -->
+  <section class="voice-message section">
+    <h2>🔊 Secret Voice Message</h2>
     <audio controls>
-      <source src="https://example.com/secret-voice.mp3" type="audio/mp3">
+      <source src="your-voice-message.mp3" type="audio/mp3" />
       Your browser does not support the audio element.
     </audio>
   </section>
 
-  <section class="section zoom-in">
-    <h2 class="section-title">📸 Romantic Slideshow</h2>
-    <div>
-      <img src="image1.jpg" width="300" style="margin: 10px; border-radius: 15px;" />
-      <img src="image2.jpg" width="300" style="margin: 10px; border-radius: 15px;" />
-      <img src="image3.jpg" width="300" style="margin: 10px; border-radius: 15px;" />
+  <!-- Romantic Slideshow -->
+  <section class="image-gallery section">
+    <h2>📸 Romantic Slideshow</h2>
+    <div class="gallery-container">
+      <img src="https://source.unsplash.com/700x400/?romantic,couple" alt="Romantic Image 1" class="gallery-slide active" />
+      <img src="https://source.unsplash.com/700x400/?love,couple" alt="Romantic Image 2" class="gallery-slide" />
+      <img src="https://source.unsplash.com/700x400/?heart,romance" alt="Romantic Image 3" class="gallery-slide" />
+      <img src="https://source.unsplash.com/700x400/?flowers,romantic" alt="Romantic Image 4" class="gallery-slide" />
+    </div>
+    <div class="gallery-controls">
+      <button class="gallery-button" id="prevBtn">← Prev</button>
+      <button class="gallery-button" id="nextBtn">Next →</button>
     </div>
   </section>
 
-  <section class="section">
-    <h2 class="section-title">💌 Heartfelt Letter</h2>
-    <p class="typewriter" style="font-family: 'Sacramento', cursive; font-size: 1.5rem; max-width: 800px; margin: auto;">
-      My dearest Cham, Even as our paths diverge, my heart still walks beside you. Every moment we've shared is etched in me — your smile, your silence, your soul. I may not be the one holding your hand forever, but I will always hold you in my heart. Wishing you a life filled with joy, love, and endless laughter. With all my love, — Baav
+  <!-- Heartfelt Letter -->
+  <section class="letter section">
+    <h2>💌 Letter to You, My Heart</h2>
+    <p>
+      Dear Cham,<br><br>
+      You are the melody that brightens my darkest days, the smile that warms my heart, and the light guiding me through every moment.<br><br>
+      Every memory we've shared is a precious treasure I hold close. No matter what the future holds, my love for you is endless and true.<br><br>
+      Happy Birthday, my love. Here's to many more beautiful moments together.<br><br>
+      With all my heart,<br>
+      Baav
     </p>
   </section>
 
-  <section class="section" id="memories">
-    <h2 class="section-title">Memories Timeline 💫</h2>
-    <div class="memory-cards">
-      <!-- memory cards unchanged -->
-    </div>
-  </section>
+  <!-- New Sections End -->
 
   <footer>
     <div class="emoji-line">💖💗💓💕💞💘💝❣️💟</div>
@@ -261,7 +339,7 @@
   </footer>
 
   <div id="popup">
-    <div id="close-btn" onclick="closePopup()">×</div>
+    <div class="popup-close" onclick="closePopup()">×</div>
     <div class="popup-content">HAPPY BIRTHDAY CHAM 💖</div>
   </div>
 
@@ -274,24 +352,92 @@
       const popup = document.getElementById('popup');
       popup.style.display = 'none';
     }
-    function createHearts() {
-      const container = document.querySelector('.hearts');
-      for (let i = 0; i < 30; i++) {
-        const heart = document.createElement('div');
-        heart.className = 'heart';
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.top = Math.random() * 100 + 'vh';
-        heart.style.animationDuration = 5 + Math.random() * 5 + 's';
-        container.appendChild(heart);
-      }
-    }
-    window.onload = createHearts;
 
+    const memories = [
+      { title: 'First Sight ✨', text: 'I saw your name on Cliq in Sep 2022 — it was unique.', bg: 'https://source.unsplash.com/featured/?love' },
+      { title: 'First Talk 🍽️', text: 'We spoke first in the dining hall — Oct 2022.', bg: 'https://source.unsplash.com/featured/?dining' },
+      { title: 'Tenkasi Trip 🚌', text: 'We got closer during our trip in mid-Oct 2022.', bg: 'https://source.unsplash.com/featured/?travel' },
+      { title: 'Best Moments 💞', text: 'Nov–Dec 2022: sharing every day with you meant everything.', bg: 'https://source.unsplash.com/featured/?memories' },
+      { title: 'Birthday Bond 🎂', text: 'I wanted to confess on Feb 3, 2023 — my birthday.', bg: 'https://source.unsplash.com/featured/?birthday' },
+      { title: 'I Said It 🌌', text: 'June 12, 2023: I said "I love you", finally.', bg: 'https://source.unsplash.com/featured/?stars' },
+      { title: 'Painful Silence 💔', text: 'From Aug to Dec 2024, you stayed distant to protect me — or maybe yourself.', bg: 'https://source.unsplash.com/featured/?heartbreak' },
+      { title: 'Still Hoping 🌹', text: 'Even now, your smile gives me hope — always.', bg: 'https://source.unsplash.com/featured/?hope' }
+    ];
+
+    const container = document.getElementById('memories-container');
+    memories.forEach(mem => {
+      const section = document.createElement('section');
+      section.className = 'section';
+      const div = document.createElement('div');
+      div.className = 'memory';
+      div.innerHTML = `<h2>${mem.title}</h2><p>${mem.text}</p>`;
+      div.style.backgroundImage = `url('${mem.bg}')`;
+      section.appendChild(div);
+      container.appendChild(section);
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.memory').forEach(mem => observer.observe(mem));
+
+    // Observe new sections for fade in effect
+    ['.voice-message', '.image-gallery', '.letter'].forEach(selector => {
+      const el = document.querySelector(selector);
+      if(el) observer.observe(el);
+    });
+
+    const popup = document.getElementById('popup');
     window.addEventListener('scroll', () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        document.getElementById('popup').style.display = 'flex';
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
+        if(popup.style.display !== 'flex'){
+          popup.style.display = 'flex';
+          for (let i = 0; i < 100; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = Math.random() * -20 + 'px';
+            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+            confetti.style.animationDuration = `${Math.random() * 2 + 2}s`;
+            popup.appendChild(confetti);
+          }
+        }
       }
     });
+
+    for (let i = 0; i < 30; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDelay = `${Math.random() * 6}s`;
+      document.body.appendChild(heart);
+    }
+
+    // Gallery controls
+    const slides = document.querySelectorAll('.gallery-slide');
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    prevBtn.addEventListener('click', () => {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      showSlide(currentSlide);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      showSlide(currentSlide);
+    });
+
   </script>
 </body>
 </html>
