@@ -18,7 +18,7 @@
     header {
       position: relative;
       height: 220vh;
-      bbackground: url('https://images.unsplash.com/photo-1526045612212-70caf35c14df?fit=crop&w=1600&q=80') no-repeat center center;
+      background: url('https://images.unsplash.com/photo-1526045612212-70caf35c14df?fit=crop&w=1600&q=80') no-repeat center center;
       background-size: contain;
       background-repeat: no-repeat;
       display: flex;
@@ -301,6 +301,26 @@
     opacity: 0;
   }
 }
+    .dancing-letters {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4em;
+  font-family: 'Dancing Script', cursive;
+  color: rgba(255, 255, 255, 0.08);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 0;
+  animation: danceLetters 4s ease-in-out infinite alternate;
+}
+
+@keyframes danceLetters {
+  0% { transform: translate(-50%, -50%) rotate(-2deg) scale(1); }
+  50% { transform: translate(-50%, -50%) rotate(2deg) scale(1.05); }
+  100% { transform: translate(-50%, -50%) rotate(-2deg) scale(1); }
+}
+
 
   </style>
 </head>
@@ -309,6 +329,7 @@
     <h1>Happy Birthday Cham 💖</h1>
     <p>You're the most beautiful gift in my life</p>
   </header>
+  <div class="dancing-letters">HAPPY BIRTHDAY CHAM 💖</div>
 
   <div id="memories-container"></div>
 
