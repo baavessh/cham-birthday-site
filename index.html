@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Happy Birthday Cham</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Quicksand&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Quicksand&family=Great+Vibes&family=Sacramento&display=swap" rel="stylesheet">
   <style>
     html, body {
       margin: 0;
@@ -17,9 +17,10 @@
 
     header {
       position: relative;
-      height: 90vh;
-      background: url('20240622_075359.jpg') no-repeat top center;
-      background-size: cover;
+      height: 100vh;
+      background: url('20240622_075359.jpg') no-repeat center center;
+      background-size: contain;
+      background-repeat: no-repeat;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -35,11 +36,29 @@
       z-index: 0;
     }
 
+    #close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      color: white;
+      z-index: 10;
+      cursor: pointer;
+      background: rgba(0,0,0,0.6);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     header h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 3.5em;
+      font-family: 'Sacramento', cursive;
+      font-size: 4em;
       z-index: 2;
       animation: fadeIn 2s ease-in-out;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
     }
     header p {
       z-index: 2;
@@ -95,18 +114,58 @@
       font-size: 1.2rem;
     }
 
-    @keyframes fadeIn {
-      0% {opacity: 0; transform: translateY(50px);}
-      100% {opacity: 1; transform: translateY(0);}
+    #popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .popup-content {
+      background: #fff0f5;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      font-size: 2.5rem;
+      font-family: 'Sacramento', cursive;
+      animation: zoomIn 1s ease forwards;
+      color: #c71585;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #f06292;
+      animation: fall 3s linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-100px) rotate(0); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    @keyframes zoomIn {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
     @media (max-width: 768px) {
-      header h1 { font-size: 2.5rem; }
+      header h1 { font-size: 2.8rem; }
     }
   </style>
 </head>
 <body>
-  <header>
+  <header id="header">
+    <div id="close-btn" onclick="closeHeader()">×</div>
     <h1>Happy Birthday Cham 💖</h1>
     <p>You're the most beautiful gift in my life</p>
   </header>
@@ -118,11 +177,19 @@
     With all my love,<br>Baav
   </footer>
 
+  <div id="popup">
+    <div class="popup-content">HAPPY BIRTHDAY CHAM 💖</div>
+  </div>
+
   <audio autoplay loop hidden>
     <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3" />
   </audio>
 
   <script>
+    function closeHeader() {
+      document.getElementById('header').style.display = 'none';
+    }
+
     const memories = [
       { title: 'First Sight ✨', text: 'I saw your name on Cliq in Sep 2022 — it was unique.', bg: 'https://source.unsplash.com/featured/?love' },
       { title: 'First Talk 🍽️', text: 'We spoke first in the dining hall — Oct 2022.', bg: 'https://source.unsplash.com/featured/?dining' },
@@ -152,6 +219,22 @@
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.memory').forEach(mem => observer.observe(mem));
+
+    const popup = document.getElementById('popup');
+    window.addEventListener('scroll', () => {
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
+        popup.style.display = 'flex';
+        for (let i = 0; i < 100; i++) {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + 'vw';
+          confetti.style.top = Math.random() * -20 + 'px';
+          confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+          confetti.style.animationDuration = `${Math.random() * 2 + 2}s`;
+          popup.appendChild(confetti);
+        }
+      }
+    });
   </script>
 </body>
 </html>
