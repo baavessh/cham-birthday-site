@@ -281,6 +281,27 @@
         font-size: 2rem;
       }
     }
+    /* Balloon & Cake animations */
+.balloon, .cake {
+  position: absolute;
+  bottom: 0;
+  font-size: 2rem;
+  animation: rise 4s ease-out forwards;
+  opacity: 0.9;
+  z-index: 10000;
+}
+
+@keyframes rise {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-90vh);
+    opacity: 0;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -424,6 +445,17 @@
       heart.style.animationDelay = `${Math.random() * 6}s`;
       document.body.appendChild(heart);
     }
+    // Balloon and cake blast
+for (let i = 0; i < 20; i++) {
+  const isBalloon = i % 2 === 0;
+  const element = document.createElement('div');
+  element.className = isBalloon ? 'balloon' : 'cake';
+  element.textContent = isBalloon ? '🎈' : '🎂';
+  element.style.left = Math.random() * 90 + 'vw';
+  element.style.animationDuration = (Math.random() * 2 + 2) + 's';
+  popup.appendChild(element);
+}
+
 
     // Gallery controls
     const slides = document.querySelectorAll('.gallery-slide');
